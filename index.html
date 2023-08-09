@@ -1,42 +1,62 @@
-<html> 
-    <head>
-        <title> class</title>
-    </head>
-    <body> 
-        <ol>
-            <li> 9 marigold</li>
-            <ul type = "disc">
-                <li> Account</li>
-                <ul type = "square">
-                 <li> 12 </li>
-                 </ul>
-                 <li> IT </li>
-                 <ul type = "square">
-                    <li> 23 </li>
-                 </ul>
-                 </ul>
-                 <li> 10 marigold</li>
-                 <ul type = "circle">
-                    <li>  Account</li>
-                    <ul type = "disc">
-                        <li> 20 </li>
-                    </ul>
-                    <li> IT</li>
-                    <ul type=" disc">
-                    </ul> 
-                    </ul>
-        </ol>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar System</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="solar-system"></canvas>
+  <script>
+    const canvas = document.getElementById('solar-system');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const sunRadius = 50;
+    const planets = [
+      { name: 'Mercury', distance: 100, radius: 5, color: '#a9a9a9', angle: 0, speed: 0.02 },
+      { name: 'Venus', distance: 150, radius: 10, color: '#ff6347', angle: 0, speed: 0.015 },
+      { name: 'Earth', distance: 200, radius: 12, color: '#1e90ff', angle: 0, speed: 0.01 },
+      { name: 'Mars', distance: 280, radius: 8, color: '#ff4500', angle: 0, speed: 0.008 }
+    ];
+    
+    function drawPlanet(x, y, radius, color) {
+      ctx.beginPath();
+      ctx.arc(x, y, radius, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.fill();
+    }
+    
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const centerX = canvas.width / 2;
+      const centerY = canvas.height / 2;
+      
+      drawPlanet(centerX, centerY, sunRadius, '#ffdd00');
+      
+      planets.forEach(planet => {
+        planet.angle += planet.speed;
+        const x = centerX + planet.distance * Math.cos(planet.angle);
+        const y = centerY + planet.distance * Math.sin(planet.angle);
+        drawPlanet(x, y, planet.radius, planet.color);
+      });
+      
+      requestAnimationFrame(animate);
+    }
+    
+    animate();
+  </script>
+</body>
 </html>
-
-
-
-
-
-
-
-
-
 
 
 
